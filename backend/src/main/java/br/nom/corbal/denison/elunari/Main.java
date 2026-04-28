@@ -1,4 +1,4 @@
-package br.nom.corbal.denison;
+package br.nom.corbal.denison.elunari;
 
 public class Main {
     public static void main(String[] args) {
