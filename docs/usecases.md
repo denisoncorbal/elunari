@@ -16,7 +16,7 @@
 * Validate if the student already exists by the informations provided
 * Create the aggregate `Student`
 * Persist student
-* Publish event `StudentCreatedEvent`
+* Publish event `StudentRegisteredEvent`
 * Return `StudentId`
 ### 1.4 - Technical Notes
 * 
