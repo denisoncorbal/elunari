@@ -1,5 +1,6 @@
 package br.nom.corbal.denison.elunari.registration.application.usecases;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
@@ -9,6 +10,7 @@ import static org.mockito.Mockito.when;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -61,10 +63,11 @@ public class RegisterStudentUsecaseTest {
                 // when
                 when(studentRepository.save(any())).thenReturn(null);
                 doNothing().when(studentEventPublisher).publish(any());
-                registerStudentUsecase.execute(registerStudentCommand);
+                UUID studentId = registerStudentUsecase.execute(registerStudentCommand);
 
                 // then
                 verify(studentRepository, times(1)).save(any(Student.class));
                 verify(studentEventPublisher, times(1)).publish(any(StudentRegisteredEvent.class));
+                assertNotNull(studentId);
         }
 }

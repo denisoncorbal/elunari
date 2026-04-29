@@ -1,5 +1,7 @@
 package br.nom.corbal.denison.elunari.registration.application.usecases;
 
+import java.util.UUID;
+
 import br.nom.corbal.denison.elunari.registration.application.events.StudentEventPublisher;
 import br.nom.corbal.denison.elunari.registration.application.events.StudentRegisteredEvent;
 import br.nom.corbal.denison.elunari.registration.application.repository.StudentRepository;
@@ -7,7 +9,7 @@ import br.nom.corbal.denison.elunari.registration.application.usecases.command.R
 import br.nom.corbal.denison.elunari.registration.domain.Student;
 import br.nom.corbal.denison.elunari.shared.application.usecase.BaseUsecase;
 
-public class RegisterStudentUsecase implements BaseUsecase<Void, RegisterStudentCommand> {
+public class RegisterStudentUsecase implements BaseUsecase<UUID, RegisterStudentCommand> {
     private final StudentRepository studentRepository;
 
     private final StudentEventPublisher<StudentRegisteredEvent> studentEventPublisher;
@@ -21,10 +23,10 @@ public class RegisterStudentUsecase implements BaseUsecase<Void, RegisterStudent
     }
 
     @Override
-    public Void execute(RegisterStudentCommand registerStudentCommand) {
+    public UUID execute(RegisterStudentCommand registerStudentCommand) {
         Student student = this.registerStudentMapper.from(registerStudentCommand);
         this.studentRepository.save(student);
         this.studentEventPublisher.publish(new StudentRegisteredEvent(student.getId()));
-        return null;
+        return student.getId();
     }
 }
