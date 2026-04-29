@@ -17,6 +17,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import br.nom.corbal.denison.elunari.registration.application.events.TeacherEventPublisher;
+import br.nom.corbal.denison.elunari.registration.application.events.TeacherRegisteredEvent;
+import br.nom.corbal.denison.elunari.registration.application.repository.TeacherRepository;
+import br.nom.corbal.denison.elunari.registration.application.usecases.command.RegisterTeacherCommand;
+import br.nom.corbal.denison.elunari.registration.domain.Teacher;
+
 @ExtendWith(MockitoExtension.class)
 public class RegisterTeacherUsecaseTest {
     @Mock
@@ -51,7 +57,7 @@ public class RegisterTeacherUsecaseTest {
         // when
         when(teacherRepository.save(any())).thenReturn(null);
         doNothing().when(teacherEventPublisher).publish(any());
-        UUID teacherId = registerTeacherUsecase.execute(registerStudentCommand);
+        UUID teacherId = registerTeacherUsecase.execute(registerTeacherCommand);
 
         // then
         verify(teacherRepository, times(1)).save(any(Teacher.class));
