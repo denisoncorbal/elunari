@@ -1,6 +1,8 @@
-package br.nom.corbal.denison.elunari.registration.application.events;
+package br.nom.corbal.denison.elunari.registration.application.events.student;
 
 import java.util.UUID;
+
+import br.nom.corbal.denison.elunari.registration.application.events.BaseStudentEvent;
 
 public class StudentRegisteredEvent extends BaseStudentEvent {
     UUID studentId;

@@ -18,8 +18,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import br.nom.corbal.denison.elunari.registration.application.events.StudentEventPublisher;
-import br.nom.corbal.denison.elunari.registration.application.events.StudentRegisteredEvent;
+import br.nom.corbal.denison.elunari.registration.application.events.student.StudentEventPublisher;
+import br.nom.corbal.denison.elunari.registration.application.events.student.StudentRegisteredEvent;
 import br.nom.corbal.denison.elunari.registration.application.repository.StudentRepository;
 import br.nom.corbal.denison.elunari.registration.application.usecases.command.RegisterStudentCommand;
 import br.nom.corbal.denison.elunari.registration.domain.Student;

@@ -1,4 +1,4 @@
-package br.nom.corbal.denison.elunari.registration.application.usecases;
+package br.nom.corbal.denison.elunari.registration.application.usecases.mapper;
 
 import java.util.stream.Collectors;
 
@@ -15,7 +15,7 @@ import br.nom.corbal.denison.elunari.registration.domain.valueobjects.PersonName
 import br.nom.corbal.denison.elunari.registration.domain.valueobjects.PhoneNumber;
 import br.nom.corbal.denison.elunari.registration.domain.valueobjects.StudentStatus;
 
-public class RegisterStudentMapper {
+public class StudentMapper {
     public Student from(RegisterStudentCommand registerStudentCommand) {
         return new Student(
                 new PersonName(

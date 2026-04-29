@@ -2,10 +2,11 @@ package br.nom.corbal.denison.elunari.registration.application.usecases;
 
 import java.util.UUID;
 
-import br.nom.corbal.denison.elunari.registration.application.events.StudentEventPublisher;
-import br.nom.corbal.denison.elunari.registration.application.events.StudentRegisteredEvent;
+import br.nom.corbal.denison.elunari.registration.application.events.student.StudentEventPublisher;
+import br.nom.corbal.denison.elunari.registration.application.events.student.StudentRegisteredEvent;
 import br.nom.corbal.denison.elunari.registration.application.repository.StudentRepository;
 import br.nom.corbal.denison.elunari.registration.application.usecases.command.RegisterStudentCommand;
+import br.nom.corbal.denison.elunari.registration.application.usecases.mapper.StudentMapper;
 import br.nom.corbal.denison.elunari.registration.domain.Student;
 import br.nom.corbal.denison.elunari.shared.application.usecase.BaseUsecase;
 
@@ -14,7 +15,7 @@ public class RegisterStudentUsecase implements BaseUsecase<UUID, RegisterStudent
 
     private final StudentEventPublisher<StudentRegisteredEvent> studentEventPublisher;
 
-    private final RegisterStudentMapper registerStudentMapper = new RegisterStudentMapper();
+    private final StudentMapper registerStudentMapper = new StudentMapper();
 
     public RegisterStudentUsecase(StudentRepository studentRepository,
             StudentEventPublisher<StudentRegisteredEvent> studentEventPublisher) {
