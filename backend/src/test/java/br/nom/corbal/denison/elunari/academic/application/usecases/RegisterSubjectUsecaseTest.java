@@ -9,12 +9,19 @@ import static org.mockito.Mockito.when;
 
 import java.util.UUID;
 
-import javax.security.auth.Subject;
-
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+import br.nom.corbal.denison.elunari.academic.application.events.subject.SubjectEventPublisher;
+import br.nom.corbal.denison.elunari.academic.application.events.subject.SubjectRegisteredEvent;
+import br.nom.corbal.denison.elunari.academic.application.repository.SubjectRepository;
+import br.nom.corbal.denison.elunari.academic.application.usecases.command.RegisterSubjectCommand;
+import br.nom.corbal.denison.elunari.academic.domain.Subject;
+
+@ExtendWith(MockitoExtension.class)
 public class RegisterSubjectUsecaseTest {
     @Mock
     SubjectRepository subjectRepository;
