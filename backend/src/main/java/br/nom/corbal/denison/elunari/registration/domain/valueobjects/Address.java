@@ -23,7 +23,7 @@ public record Address(
         if (locale == null || locale.isBlank()) {
             throw new IllegalArgumentException("Locale is required");
         }
-        if (neighbourhood == null | neighbourhood.isBlank()) {
+        if (neighbourhood == null || neighbourhood.isBlank()) {
             throw new IllegalArgumentException("Neighbourhood is required");
         }
     }
