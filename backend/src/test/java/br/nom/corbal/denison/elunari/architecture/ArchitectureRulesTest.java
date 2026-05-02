@@ -94,4 +94,10 @@ public class ArchitectureRulesTest {
                         .should().beFreeOfCycles()
                         .allowEmptyShould(true);
 
+        @ArchTest
+        static final ArchRule repository_ports_should_be_in_domain = classes()
+                        .that().haveNameMatching(".*Repository")
+                        .and().areInterfaces()
+                        .should().resideInAPackage("..domain.repository..");
+
 }
