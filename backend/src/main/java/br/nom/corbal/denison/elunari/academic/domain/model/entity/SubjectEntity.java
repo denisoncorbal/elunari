@@ -8,6 +8,11 @@ import br.nom.corbal.denison.elunari.academic.domain.model.valueobject.SubjectSt
 public class SubjectEntity {
     private final UUID id;
     private SubjectName name;
+
+    public SubjectName getName() {
+        return name;
+    }
+
     private SubjectStatus status;
 
     public SubjectEntity(SubjectName name, SubjectStatus status) {

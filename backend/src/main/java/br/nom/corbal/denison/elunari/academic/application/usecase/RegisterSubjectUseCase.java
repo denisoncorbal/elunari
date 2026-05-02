@@ -26,6 +26,9 @@ public class RegisterSubjectUseCase implements BaseUseCase<UUID, RegisterSubject
     @Override
     public UUID execute(RegisterSubjectCommand registerSubjectCommand) {
         SubjectEntity subject = this.registerSubjectMapper.from(registerSubjectCommand);
+        if (this.subjectRepository.existsByName(subject.getName())) {
+            throw new IllegalArgumentException("Invalid subject, name must be unique");
+        }
         this.subjectRepository.save(subject);
         this.subjectEventPublisher.publish(new SubjectRegisteredEvent(subject.getId()));
         return subject.getId();
