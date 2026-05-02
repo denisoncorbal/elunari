@@ -5,9 +5,9 @@ import java.util.UUID;
 import br.nom.corbal.denison.elunari.registration.application.command.RegisterStudentCommand;
 import br.nom.corbal.denison.elunari.registration.application.event.StudentEventPublisher;
 import br.nom.corbal.denison.elunari.registration.application.mapper.StudentMapper;
-import br.nom.corbal.denison.elunari.registration.application.repository.StudentRepository;
 import br.nom.corbal.denison.elunari.registration.domain.event.student.StudentRegisteredEvent;
 import br.nom.corbal.denison.elunari.registration.domain.model.entity.StudentEntity;
+import br.nom.corbal.denison.elunari.registration.domain.repository.StudentRepository;
 import br.nom.corbal.denison.elunari.shared.application.usecase.BaseUseCase;
 
 public class RegisterStudentUseCase implements BaseUseCase<UUID, RegisterStudentCommand> {

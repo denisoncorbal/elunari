@@ -17,9 +17,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import br.nom.corbal.denison.elunari.academic.application.command.RegisterSubjectCommand;
 import br.nom.corbal.denison.elunari.academic.application.event.subject.SubjectEventPublisher;
-import br.nom.corbal.denison.elunari.academic.application.repository.SubjectRepository;
 import br.nom.corbal.denison.elunari.academic.domain.event.SubjectRegisteredEvent;
 import br.nom.corbal.denison.elunari.academic.domain.model.entity.SubjectEntity;
+import br.nom.corbal.denison.elunari.academic.domain.repository.SubjectRepository;
 
 @ExtendWith(MockitoExtension.class)
 public class RegisterSubjectUseCaseTest {
