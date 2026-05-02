@@ -1,4 +1,4 @@
-package br.nom.corbal.denison.elunari.academic.application.repository;
+package br.nom.corbal.denison.elunari.academic.domain.repository;
 
 import br.nom.corbal.denison.elunari.academic.domain.model.entity.SubjectEntity;
 

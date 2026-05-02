@@ -20,10 +20,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import br.nom.corbal.denison.elunari.registration.application.command.RegisterStudentCommand;
 import br.nom.corbal.denison.elunari.registration.application.event.StudentEventPublisher;
-import br.nom.corbal.denison.elunari.registration.application.repository.StudentRepository;
 import br.nom.corbal.denison.elunari.registration.application.usecases.RegisterStudentUseCase;
 import br.nom.corbal.denison.elunari.registration.domain.event.student.StudentRegisteredEvent;
 import br.nom.corbal.denison.elunari.registration.domain.model.entity.StudentEntity;
+import br.nom.corbal.denison.elunari.registration.domain.repository.StudentRepository;
 
 @ExtendWith(MockitoExtension.class)
 public class RegisterStudentUseCaseTest {
