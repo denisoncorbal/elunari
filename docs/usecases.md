@@ -21,7 +21,7 @@
 
 - Receive command `RegisterStudentCommand`
 - Validate if the student already exists by the informations provided
-- Create the aggregate `Student`
+- Create the entity `Student`
 - Persist student
 - Publish event `StudentRegisteredEvent`
 - Return `StudentId`
@@ -54,7 +54,7 @@
 
 - Receive command `RegisterTeacherCommand`
 - Validate if the teacher already exists by the informations provided
-- Create the aggregate `Teacher`
+- Create the entity `Teacher`
 - Persist teacher
 - Publish event `TeacherRegisteredEvent`
 - Return `TeacherId`
@@ -74,7 +74,7 @@
 - Actor: Registrar office
 - Objective: Register the creation of a subject to be used on a system
 - Bounded Context: Academic
-- Description: The school direction define the subjects that will be used on school and then requet the registrar office to create them on system
+- Description: The school direction define the subjects that will be used on school and then request the registrar office to create them on system
 
 ### 3.2 - Business Rules
 
@@ -89,7 +89,7 @@
 - Receive command `RegisterSubjectCommand`
 - Validate if the subject already exists by the informations provided
 - Validate if the name is already in use
-- Create the aggregate `Subject`
+- Create the entity `Subject`
 - Persist subject
 - Publish event `SubjectRegisteredEvent`
 - Return `SubjectId`
@@ -99,5 +99,40 @@
 -
 
 ### 3.5 - Traceability
+
+-
+
+## 4 - Register school class
+
+### 4.1 - Overview
+
+- Actor: Registrar office
+- Objective: Register the creation of a school class to be used on a system
+- Bounded Context: Academic
+- Description: The school direction define the school classes that will be used on school and then request the registrar office to create them on system
+
+### 4.2 - Business Rules
+
+- A school class must have only one register
+- A school class must hava at least the information of name, grade and reference year
+- The school class name must be unique
+- A school class must have an unique identifier to be used on the system
+- A school class must hava an information about if a register is active or not
+
+### 4.3 - Use Case Flow
+
+- Receive command `RegisterSchoolClassCommand`
+- Validate if the school class already exists by the informations provided
+- Validate if the name is already in use
+- Create the entity `SchoolClass`
+- Persist school class
+- Publish event `SchoolClassRegisteredEvent`
+- Return `SchoolClassId`
+
+### 4.4 - Technical Notes
+
+-
+
+### 4.5 - Traceability
 
 -
