@@ -1,7 +1,7 @@
 package br.nom.corbal.denison.elunari.registration.application.repository;
 
-import br.nom.corbal.denison.elunari.registration.domain.Student;
+import br.nom.corbal.denison.elunari.registration.domain.model.entity.StudentEntity;
 
 public interface StudentRepository {
-    public Student save(Student student);
+    public StudentEntity save(StudentEntity student);
 }
