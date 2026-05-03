@@ -1,4 +1,4 @@
-package br.nom.corbal.denison.elunari.academic.domain.valueobject;
+package br.nom.corbal.denison.elunari.registration.domain.model.valueobject;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -6,44 +6,48 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import br.nom.corbal.denison.elunari.academic.domain.model.valueobject.SubjectStatus;
-
-public class SubjectStatusTest {
+public class GuardianTypeTest {
     @Test
-    public void givenValidSubjectStatus_whenCreate_shouldReturn() {
+    public void givenValidGuardianType_whenCreate_shouldReturn() {
         assertDoesNotThrow(() -> {
-            SubjectStatus subjectStatus = new SubjectStatus(
-                    "ACTIVE");
-            assertNotNull(subjectStatus);
+            GuardianType guardianType = new GuardianType(
+                    "FATHER");
+            assertNotNull(guardianType);
         });
 
         assertDoesNotThrow(() -> {
-            SubjectStatus subjectStatus = new SubjectStatus(
-                    "INACTIVE");
-            assertNotNull(subjectStatus);
+            GuardianType guardianType = new GuardianType(
+                    "MOTHER");
+            assertNotNull(guardianType);
+        });
+
+        assertDoesNotThrow(() -> {
+            GuardianType guardianType = new GuardianType(
+                    "OTHER");
+            assertNotNull(guardianType);
         });
     }
 
     @Test
-    public void givenInvalidStudentStatus_whenCreate_shouldThrowError() {
+    public void givenInvalidGuardianType_whenCreate_shouldThrowError() {
         assertThrows(
                 IllegalArgumentException.class,
                 () -> {
-                    new SubjectStatus(
+                    new GuardianType(
                             null);
                 });
 
         assertThrows(
                 IllegalArgumentException.class,
                 () -> {
-                    new SubjectStatus(
+                    new GuardianType(
                             "");
                 });
 
         assertThrows(
                 IllegalArgumentException.class,
                 () -> {
-                    new SubjectStatus(
+                    new GuardianType(
                             "ANYTHING");
                 });
     }
