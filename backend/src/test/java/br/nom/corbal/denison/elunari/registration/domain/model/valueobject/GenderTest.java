@@ -1,4 +1,4 @@
-package br.nom.corbal.denison.elunari.registration.domain.valueobject;
+package br.nom.corbal.denison.elunari.registration.domain.model.valueobject;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -6,44 +6,42 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import br.nom.corbal.denison.elunari.registration.domain.model.valueobject.TeacherStatus;
-
-public class TeacherStatusTest {
+public class GenderTest {
     @Test
-    public void givenValidTeacherStatus_whenCreate_shouldReturn() {
+    public void givenValidGender_whenCreate_shouldReturn() {
         assertDoesNotThrow(() -> {
-            TeacherStatus teacherStatus = new TeacherStatus(
-                    "ACTIVE");
-            assertNotNull(teacherStatus);
+            Gender gender = new Gender(
+                    "M");
+            assertNotNull(gender);
         });
 
         assertDoesNotThrow(() -> {
-            TeacherStatus teacherStatus = new TeacherStatus(
-                    "INACTIVE");
-            assertNotNull(teacherStatus);
+            Gender gender = new Gender(
+                    "F");
+            assertNotNull(gender);
         });
     }
 
     @Test
-    public void givenInvalidTeacherStatus_whenCreate_shouldThrowError() {
+    public void givenInvalidGender_whenCreate_shouldThrowError() {
         assertThrows(
                 IllegalArgumentException.class,
                 () -> {
-                    new TeacherStatus(
+                    new Gender(
                             null);
                 });
 
         assertThrows(
                 IllegalArgumentException.class,
                 () -> {
-                    new TeacherStatus(
+                    new Gender(
                             "");
                 });
 
         assertThrows(
                 IllegalArgumentException.class,
                 () -> {
-                    new TeacherStatus(
+                    new Gender(
                             "ANYTHING");
                 });
     }
