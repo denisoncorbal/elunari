@@ -136,3 +136,37 @@
 ### 4.5 - Traceability
 
 -
+
+## 5 - Allocate teacher
+
+### 5.1 - Overview
+
+- Actor: Registrar office
+- Objective: Allocate a teacher to teach a subject on a school class
+- Bounded Context: Academic
+- Description: The school direction define who teacher will be teaching which subject on which school class. Then they request the registrar office to allocate them on system
+
+### 5.2 - Business Rules
+
+- An allocation must have only one register
+- An allocation must hava at least the information of teacher unique identifier, subject unique identifier, school class unique identifier, start time and end time
+- Two allocations for the same teacher cannot have conflit on the start time and end time
+- An allocation must have an unique identifier to be used on the system
+- An allocation must hava an information about if it is active or not
+
+### 5.3 - Use Case Flow
+
+- Receive command `AllocateTeacherCommand`
+- Validate if there is not any conflit on start and end time for the teacher
+- Create the aggregate `Allocation`
+- Persist allocation
+- Publish event `TeacherAllocatedEvent`
+- Return `AllocationId`
+
+### 5.4 - Technical Notes
+
+-
+
+### 5.5 - Traceability
+
+-
