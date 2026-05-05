@@ -1,7 +1,8 @@
 package br.nom.corbal.denison.elunari.academic.domain.model.aggregate;
 
-import java.time.LocalTime;
 import java.util.UUID;
+
+import br.nom.corbal.denison.elunari.academic.domain.model.valueobject.TimePeriod;
 
 public class AllocationAggregate {
     UUID id;
@@ -13,25 +14,18 @@ public class AllocationAggregate {
     UUID teacherId;
     UUID subjectId;
     UUID schoolClassId;
-    LocalTime startTime;
-    LocalTime endTime;
+    TimePeriod period;
 
-    public LocalTime getStartTime() {
-        return startTime;
+    public TimePeriod getPeriod() {
+        return period;
     }
 
-    public LocalTime getEndTime() {
-        return endTime;
-    }
-
-    public AllocationAggregate(UUID teacherId, UUID subjectId, UUID schoolClassId, LocalTime startTime,
-            LocalTime endTime) {
+    public AllocationAggregate(UUID teacherId, UUID subjectId, UUID schoolClassId, TimePeriod period) {
         this.id = UUID.randomUUID();
         this.teacherId = teacherId;
         this.subjectId = subjectId;
         this.schoolClassId = schoolClassId;
-        this.startTime = startTime;
-        this.endTime = endTime;
+        this.period = period;
     }
 
 }

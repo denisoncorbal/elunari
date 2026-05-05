@@ -50,8 +50,8 @@ public class AllocateTeacherUseCase implements BaseUseCase<UUID, AllocateTeacher
                 .findAllByTeacherIdAndStatusActive(allocateTeacherCommand.teacherId());
 
         existentAllocations.forEach(ea -> {
-            if (isTimeConflicting(ea.getStartTime(), ea.getEndTime(), allocation.getStartTime(),
-                    allocation.getEndTime())) {
+            if (isTimeConflicting(ea.getPeriod().start(), ea.getPeriod().end(), allocation.getPeriod().start(),
+                    allocation.getPeriod().end())) {
                 throw new IllegalArgumentException("Allocation conflicts with allocations that already exists");
             }
         });
