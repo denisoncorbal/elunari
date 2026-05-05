@@ -1,6 +1,7 @@
 package br.nom.corbal.denison.elunari.academic.application.usecase;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
@@ -8,6 +9,9 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.Collections;
+import java.util.Set;
 import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
@@ -46,7 +50,7 @@ public class AllocateTeacherUseCaseTest {
     AllocateTeacherUseCase allocateTeacherUseCase;
 
     @Test
-    public void givenValidSchoolClass_whenRegister_thenShouldPersistAndPublishEvent() {
+    public void givenValidAllocation_whenAllocate_thenShouldPersistAndPublishEvent() {
         // given
         AllocateTeacherCommand allocateTeacherCommand = new AllocateTeacherCommand(
                 UUID.randomUUID(),
@@ -60,15 +64,54 @@ public class AllocateTeacherUseCaseTest {
         when(teacherGateway.existsById(any())).thenReturn(true);
         when(schoolClassRepository.existsById(any())).thenReturn(true);
         when(subjectRepository.existsById(any())).thenReturn(true);
+        when(allocationRepository.findAllByTeacherIdAndStatusActive(any()))
+                .thenReturn(Collections.emptySet());
         doNothing().when(allocationEventPublisher).publish(any());
         UUID allocationId = allocateTeacherUseCase.execute(allocateTeacherCommand);
 
         // then
         verify(allocationRepository, times(1)).save(any(AllocationAggregate.class));
+        verify(allocationRepository, times(1)).findAllByTeacherIdAndStatusActive(any(UUID.class));
         verify(teacherGateway, times(1)).existsById(any(UUID.class));
         verify(schoolClassRepository, times(1)).existsById(any(UUID.class));
         verify(subjectRepository, times(1)).existsById(any(UUID.class));
         verify(allocationEventPublisher, times(1)).publish(any(TeacherAllocatedEvent.class));
         assertNotNull(allocationId);
+    }
+
+    @Test
+    public void givenInvalidAllocation_whenAllocate_thenShouldThrowException() {
+        // given
+        AllocateTeacherCommand allocateTeacherCommand = new AllocateTeacherCommand(
+                UUID.randomUUID(),
+                UUID.randomUUID(),
+                UUID.randomUUID(),
+                LocalTime.of(8, 0),
+                LocalTime.of(15, 0));
+
+        // when
+        when(teacherGateway.existsById(any())).thenReturn(true);
+        when(schoolClassRepository.existsById(any())).thenReturn(true);
+        when(subjectRepository.existsById(any())).thenReturn(true);
+        when(allocationRepository.findAllByTeacherIdAndStatusActive(any()))
+                .thenReturn(Set.<AllocationAggregate>of(
+                        new AllocationAggregate(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID(),
+                                LocalTime.of(7, 0), LocalTime.of(9, 0))))
+                .thenReturn(Set.<AllocationAggregate>of(
+                        new AllocationAggregate(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID(),
+                                LocalTime.of(9, 0), LocalTime.of(10, 0))))
+                .thenReturn(Set.<AllocationAggregate>of(
+                        new AllocationAggregate(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID(),
+                                LocalTime.of(12, 0), LocalTime.of(17, 0))))
+                .thenReturn(Set.<AllocationAggregate>of(
+                        new AllocationAggregate(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID(),
+                                LocalTime.of(7, 0), LocalTime.of(17, 0))));
+
+        // then
+        for (int i = 0; i < 4; i++) {
+            assertThrows(IllegalArgumentException.class, () -> {
+                allocateTeacherUseCase.execute(allocateTeacherCommand);
+            });
+        }
     }
 }
