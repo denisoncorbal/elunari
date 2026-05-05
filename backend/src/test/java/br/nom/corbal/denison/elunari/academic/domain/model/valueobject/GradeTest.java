@@ -6,30 +6,37 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-public class SubjectNameTest {
+public class GradeTest {
     @Test
-    public void givenValidSubjectName_whenCreate_shouldReturn() {
+    public void givenValidGrade_whenCreate_shouldReturn() {
         assertDoesNotThrow(() -> {
-            SubjectName subjectName = new SubjectName(
-                    "Test");
-            assertNotNull(subjectName);
+            Grade grade = new Grade(
+                    "KINDERGARTEN");
+            assertNotNull(grade);
         });
     }
 
     @Test
-    public void givenInvalidSubjectName_whenCreate_shouldThrowError() {
+    public void givenInvalidGrade_whenCreate_shouldThrowError() {
         assertThrows(
                 IllegalArgumentException.class,
                 () -> {
-                    new SubjectName(
+                    new Grade(
                             null);
                 });
 
         assertThrows(
                 IllegalArgumentException.class,
                 () -> {
-                    new SubjectName(
+                    new Grade(
                             "");
+                });
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> {
+                    new Grade(
+                            "ANYTHING");
                 });
     }
 }
