@@ -24,6 +24,7 @@ import br.nom.corbal.denison.elunari.academic.application.event.allocation.Alloc
 import br.nom.corbal.denison.elunari.academic.domain.event.TeacherAllocatedEvent;
 import br.nom.corbal.denison.elunari.academic.domain.gateway.TeacherGateway;
 import br.nom.corbal.denison.elunari.academic.domain.model.aggregate.AllocationAggregate;
+import br.nom.corbal.denison.elunari.academic.domain.model.valueobject.TimePeriod;
 import br.nom.corbal.denison.elunari.academic.domain.repository.AllocationRepository;
 import br.nom.corbal.denison.elunari.academic.domain.repository.SchoolClassRepository;
 import br.nom.corbal.denison.elunari.academic.domain.repository.SubjectRepository;
@@ -69,11 +70,12 @@ public class AllocateTeacherUseCaseTest {
                 when(allocationRepository.findAllByTeacherIdAndStatusActive(any()))
                                 .thenReturn(Set.of(
                                                 new AllocationAggregate(null, null, null,
-                                                                LocalTime.of(baseTestHour, 10),
-                                                                LocalTime.of(baseTestHour, 20)),
+                                                                new TimePeriod(LocalTime.of(baseTestHour, 10),
+                                                                                LocalTime.of(baseTestHour, 20))),
                                                 new AllocationAggregate(null, null, null,
-                                                                LocalTime.of(baseTestHour, 50),
-                                                                LocalTime.of(baseTestHour, 59))));
+                                                                new TimePeriod(
+                                                                                LocalTime.of(baseTestHour, 50),
+                                                                                LocalTime.of(baseTestHour, 59)))));
                 doNothing().when(allocationEventPublisher).publish(any());
                 UUID allocationId = allocateTeacherUseCase.execute(allocateTeacherCommand);
 
@@ -105,19 +107,27 @@ public class AllocateTeacherUseCaseTest {
                                 .thenReturn(Set.<AllocationAggregate>of(
                                                 new AllocationAggregate(UUID.randomUUID(), UUID.randomUUID(),
                                                                 UUID.randomUUID(),
-                                                                LocalTime.of(7, 0), LocalTime.of(9, 0))))
+                                                                new TimePeriod(
+                                                                                LocalTime.of(7, 0),
+                                                                                LocalTime.of(9, 0)))))
                                 .thenReturn(Set.<AllocationAggregate>of(
                                                 new AllocationAggregate(UUID.randomUUID(), UUID.randomUUID(),
                                                                 UUID.randomUUID(),
-                                                                LocalTime.of(9, 0), LocalTime.of(10, 0))))
+                                                                new TimePeriod(
+                                                                                LocalTime.of(9, 0),
+                                                                                LocalTime.of(10, 0)))))
                                 .thenReturn(Set.<AllocationAggregate>of(
                                                 new AllocationAggregate(UUID.randomUUID(), UUID.randomUUID(),
                                                                 UUID.randomUUID(),
-                                                                LocalTime.of(12, 0), LocalTime.of(17, 0))))
+                                                                new TimePeriod(
+                                                                                LocalTime.of(12, 0),
+                                                                                LocalTime.of(17, 0)))))
                                 .thenReturn(Set.<AllocationAggregate>of(
                                                 new AllocationAggregate(UUID.randomUUID(), UUID.randomUUID(),
                                                                 UUID.randomUUID(),
-                                                                LocalTime.of(7, 0), LocalTime.of(17, 0))));
+                                                                new TimePeriod(
+                                                                                LocalTime.of(7, 0),
+                                                                                LocalTime.of(17, 0)))));
 
                 // then
                 for (int i = 0; i < 4; i++) {
