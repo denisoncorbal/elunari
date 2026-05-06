@@ -112,7 +112,12 @@ The system can be run locally using docker.
 
 ## Roadmap
 
-- [ ] Register student
+- [x] Register student
+- [x] Register teacher
+- [x] Register subject
+- [x] Register school class
+- [x] Allocate teacher
+- [x] Enroll student
 - [ ] ...
 
 See the [open issues](https://github.com/denisoncorbal/elunari/issues) for a full list of proposed features (and known issues).
