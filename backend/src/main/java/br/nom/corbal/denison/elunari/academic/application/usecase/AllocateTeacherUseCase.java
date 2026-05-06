@@ -36,7 +36,6 @@ public class AllocateTeacherUseCase implements BaseUseCase<UUID, AllocateTeacher
 
     @Override
     public UUID execute(AllocateTeacherCommand allocateTeacherCommand) {
-        AllocationAggregate allocation = this.allocationMapper.from(allocateTeacherCommand);
         if (!this.teacherGateway.existsById(allocateTeacherCommand.teacherId())) {
             throw new IllegalArgumentException("Invalid teacher id");
         }
@@ -48,6 +47,8 @@ public class AllocateTeacherUseCase implements BaseUseCase<UUID, AllocateTeacher
         }
         Set<AllocationAggregate> existentAllocations = this.allocationRepository
                 .findAllByTeacherIdAndStatusActive(allocateTeacherCommand.teacherId());
+
+        AllocationAggregate allocation = this.allocationMapper.from(allocateTeacherCommand);
 
         existentAllocations.forEach(ea -> {
             if (isTimeConflicting(ea.getPeriod().start(), ea.getPeriod().end(), allocation.getPeriod().start(),
