@@ -170,3 +170,37 @@
 ### 5.5 - Traceability
 
 -
+
+## 6 - Enroll student
+
+### 5.1 - Overview
+
+- Actor: Registrar office
+- Objective: Enroll a student to study the reference year on a defined school class
+- Bounded Context: Academic
+- Description: The school direction define which school class the student will be taking for the reference year and request the registrar office to enroll the student into the school class
+
+### 5.2 - Business Rules
+
+- An enrollment must have only one register
+- An enrollment must hava at least the information of student unique identifier, school class unique identifier, start time and end time
+- Each student can have only one active enrollment
+- An enrollment must have an unique identifier to be used on the system
+- An enrollment must hava an information about if it is active or not
+
+### 5.3 - Use Case Flow
+
+- Receive command `EnrollStudentCommand`
+- Validate if there is not another active enrollment for the same student
+- Create the aggregate `Enrollment`
+- Persist enrollment
+- Publish event `StudentEnrolledEvent`
+- Return `EnrollmentId`
+
+### 5.4 - Technical Notes
+
+-
+
+### 5.5 - Traceability
+
+-
