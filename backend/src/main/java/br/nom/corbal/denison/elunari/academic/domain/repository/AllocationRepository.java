@@ -9,4 +9,6 @@ public interface AllocationRepository {
     public Set<AllocationAggregate> findAllByTeacherIdAndStatusActive(UUID teacherId);
 
     public AllocationAggregate save(AllocationAggregate allocationAggregate);
+
+    public boolean isTeacherAllocatedToSchoolClass(UUID teacherId, UUID schoolClassId);
 }

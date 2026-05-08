@@ -8,4 +8,6 @@ public interface EnrollmentRepository {
     public EnrollmentAggregate save(EnrollmentAggregate enrollmentAggregate);
 
     public boolean isStudentAlreadyEnrolled(UUID studentId);
+
+    public boolean isStudentEnrolledToSchoolClass(UUID studentId, UUID schoolClassId);
 }
