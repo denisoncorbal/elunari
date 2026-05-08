@@ -118,6 +118,7 @@ The system can be run locally using docker.
 - [x] Register school class
 - [x] Allocate teacher
 - [x] Enroll student
+- [x] Enter english language development record
 - [ ] ...
 
 See the [open issues](https://github.com/denisoncorbal/elunari/issues) for a full list of proposed features (and known issues).
