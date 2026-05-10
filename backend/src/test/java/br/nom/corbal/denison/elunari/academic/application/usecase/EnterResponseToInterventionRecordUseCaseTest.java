@@ -60,7 +60,8 @@ public class EnterResponseToInterventionRecordUseCaseTest {
                                 UUID.randomUUID(),
                                 UUID.randomUUID(),
                                 UUID.randomUUID(),
-                                "TIER 1");
+                                "TIER 1",
+                                "ACTIVE");
 
                 // when
                 when(responseToInterventionRecordRepository.save(any())).thenReturn(null);
@@ -98,7 +99,8 @@ public class EnterResponseToInterventionRecordUseCaseTest {
                                 UUID.randomUUID(),
                                 UUID.randomUUID(),
                                 UUID.randomUUID(),
-                                "TIER 1");
+                                "TIER 1",
+                                "ACTIVE");
 
                 // when
                 when(teacherGateway.existsById(any())).thenReturn(true);
