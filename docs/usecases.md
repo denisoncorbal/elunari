@@ -268,3 +268,35 @@
 ### 8.5 - Traceability
 
 -
+
+## 9 - Enter special education student record
+
+### 9.1 - Overview
+
+- Actor: Teacher
+- Objective: School class teacher need to record information about special education about his students
+- Bounded Context: Academic
+- Description: Teacher observes his students and then enter in the system information about his special education
+
+### 9.2 - Business Rules
+
+- A special education student record must have only one register
+- A special education student record must hava at least the information of teacher unique identifier, student unique identifier, school class unique identifier, data to be recorded
+- A special education student record must have an unique identifier to be used on the system
+- A special education student record must hava an information about if it is active or not
+
+### 9.3 - Use Case Flow
+
+- Receive command `EnterSpecialEducationStudentRecordCommand`
+- Create the aggregate `SpecialEducationStudentRecord`
+- Persist special education student record
+- Publish event `SpecialEducationStudentRecordEnteredEvent`
+- Return `SpecialEducationStudentRecordId`
+
+### 9.4 - Technical Notes
+
+-
+
+### 9.5 - Traceability
+
+-
