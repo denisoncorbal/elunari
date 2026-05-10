@@ -236,3 +236,35 @@
 ### 7.5 - Traceability
 
 -
+
+## 8 - Enter response to intervention record
+
+### 8.1 - Overview
+
+- Actor: Teacher
+- Objective: School class teacher need to record information about response to intervention about his students
+- Bounded Context: Academic
+- Description: Teacher observes his students and then enter in the system information about his response to intervention
+
+### 8.2 - Business Rules
+
+- An response to intervention record must have only one register
+- An response to intervention record must hava at least the information of teacher unique identifier, student unique identifier, school class unique identifier, data to be recorded
+- An response to intervention record must have an unique identifier to be used on the system
+- An response to intervention record must hava an information about if it is active or not
+
+### 8.3 - Use Case Flow
+
+- Receive command `EnterResponseToInterventionRecordCommand`
+- Create the aggregate `ResponseToInterventionRecord`
+- Persist response to intervention record
+- Publish event `ResponseToInterventionRecordEnteredEvent`
+- Return `ResponseToInterventionRecordId`
+
+### 8.4 - Technical Notes
+
+-
+
+### 8.5 - Traceability
+
+-
