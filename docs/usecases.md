@@ -300,3 +300,35 @@
 ### 9.5 - Traceability
 
 -
+
+## 10 - Register Assignement
+
+### 10.1 - Overview
+
+- Actor: Teacher
+- Objective: School class teacher need to be able to give assignement to his students to evaluate their progress
+- Bounded Context: Academic
+- Description: Teacher give his students assignements to evaluate their progress
+
+### 10.2 - Business Rules
+
+- An assignement must have only one register
+- An assignement must hava at least the information of teacher unique identifier, school class unique identifier, subject unique identifier, student unique identifier, quarter reference, name, weight, grade
+- An assignement must have an unique identifier to be used on the system
+- An assignement must hava an information about if it is active or not
+
+### 10.3 - Use Case Flow
+
+- Receive command `RegisterAssignementCommand`
+- Create the aggregate `Assignement`
+- Persist assignement
+- Publish event `AssignementRegisteredEvent`
+- Return `AssignementId`
+
+### 10.4 - Technical Notes
+
+-
+
+### 10.5 - Traceability
+
+-
