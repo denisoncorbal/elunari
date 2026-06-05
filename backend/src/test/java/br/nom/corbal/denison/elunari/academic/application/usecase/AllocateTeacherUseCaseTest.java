@@ -49,18 +49,22 @@ public class AllocateTeacherUseCaseTest {
         @InjectMocks
         AllocateTeacherUseCase allocateTeacherUseCase;
 
-        @Test
-        public void givenValidAllocation_whenAllocate_thenShouldPersistAndPublishEvent() {
-                // given
+        private AllocateTeacherCommand validAllocation() {
                 Random random = new Random();
                 int baseTestHour = random.nextInt(10) + 1;
 
-                AllocateTeacherCommand allocateTeacherCommand = new AllocateTeacherCommand(
+                return new AllocateTeacherCommand(
                                 UUID.randomUUID(),
                                 UUID.randomUUID(),
                                 UUID.randomUUID(),
                                 LocalTime.of(baseTestHour, 30),
                                 LocalTime.of(baseTestHour, 40));
+        }
+
+        @Test
+        public void givenValidAllocation_whenAllocate_thenShouldPersistAndPublishEvent() {
+                // given
+                AllocateTeacherCommand allocateTeacherCommand = validAllocation();
 
                 // when
                 when(allocationRepository.save(any())).thenReturn(null);
@@ -70,12 +74,19 @@ public class AllocateTeacherUseCaseTest {
                 when(allocationRepository.findAllByTeacherIdAndStatusActive(any()))
                                 .thenReturn(Set.of(
                                                 new AllocationAggregate(null, null, null,
-                                                                new TimePeriod(LocalTime.of(baseTestHour, 10),
-                                                                                LocalTime.of(baseTestHour, 20))),
+                                                                new TimePeriod(LocalTime.of(allocateTeacherCommand
+                                                                                .startTime().getHour(), 10),
+                                                                                LocalTime.of(allocateTeacherCommand
+                                                                                                .startTime().getHour(),
+                                                                                                20))),
                                                 new AllocationAggregate(null, null, null,
                                                                 new TimePeriod(
-                                                                                LocalTime.of(baseTestHour, 50),
-                                                                                LocalTime.of(baseTestHour, 59)))));
+                                                                                LocalTime.of(allocateTeacherCommand
+                                                                                                .startTime().getHour(),
+                                                                                                50),
+                                                                                LocalTime.of(allocateTeacherCommand
+                                                                                                .startTime().getHour(),
+                                                                                                59)))));
                 doNothing().when(allocationEventPublisher).publish(any());
                 UUID allocationId = allocateTeacherUseCase.execute(allocateTeacherCommand);
 
@@ -87,6 +98,48 @@ public class AllocateTeacherUseCaseTest {
                 verify(subjectRepository, times(1)).existsById(any(UUID.class));
                 verify(allocationEventPublisher, times(1)).publish(any(TeacherAllocatedEvent.class));
                 assertNotNull(allocationId);
+        }
+
+        @Test
+        public void givenTeacherIdThatDoesNotExist_whenAllocate_thenShouldThrowException() {
+                // given
+                AllocateTeacherCommand allocateTeacherCommand = validAllocation();
+
+                // when
+                when(teacherGateway.existsById(any())).thenReturn(false);
+
+                // then
+                assertThrows(IllegalArgumentException.class, () -> allocateTeacherUseCase
+                                .execute(allocateTeacherCommand));
+        }
+
+        @Test
+        public void givenSchoolClassIdThatDoesNotExist_whenAllocate_thenShouldThrowException() {
+                // given
+                AllocateTeacherCommand allocateTeacherCommand = validAllocation();
+
+                // when
+                when(teacherGateway.existsById(any())).thenReturn(true);
+                when(schoolClassRepository.existsById(any())).thenReturn(false);
+
+                // then
+                assertThrows(IllegalArgumentException.class, () -> allocateTeacherUseCase
+                                .execute(allocateTeacherCommand));
+        }
+
+        @Test
+        public void givenSubjectIdThatDoesNotExist_whenAllocate_thenShouldThrowException() {
+                // given
+                AllocateTeacherCommand allocateTeacherCommand = validAllocation();
+
+                // when
+                when(teacherGateway.existsById(any())).thenReturn(true);
+                when(schoolClassRepository.existsById(any())).thenReturn(true);
+                when(subjectRepository.existsById(any())).thenReturn(false);
+
+                // then
+                assertThrows(IllegalArgumentException.class, () -> allocateTeacherUseCase
+                                .execute(allocateTeacherCommand));
         }
 
         @Test

@@ -53,14 +53,18 @@ public class EnterEnglishLanguageDevelopmentRecordUseCaseTest {
         @InjectMocks
         EnterEnglishLanguageDevelopmentRecordUseCase enterEnglishLanguageDevelopmentRecordUseCase;
 
-        @Test
-        public void givenValidEnglishLanguageDevelopmentRecord_whenEnter_thenShouldPersistAndPublishEvent() {
-                // given
-                EnterEnglishLanguageDevelopmentRecordCommand enterEnglishLanguageDevelopmentRecordCommand = new EnterEnglishLanguageDevelopmentRecordCommand(
+        private EnterEnglishLanguageDevelopmentRecordCommand validEnglishLanguageDevelopmentRecord() {
+                return new EnterEnglishLanguageDevelopmentRecordCommand(
                                 UUID.randomUUID(),
                                 UUID.randomUUID(),
                                 UUID.randomUUID(),
                                 "LEVEL 1");
+        }
+
+        @Test
+        public void givenValidEnglishLanguageDevelopmentRecord_whenEnter_thenShouldPersistAndPublishEvent() {
+                // given
+                EnterEnglishLanguageDevelopmentRecordCommand enterEnglishLanguageDevelopmentRecordCommand = validEnglishLanguageDevelopmentRecord();
 
                 // when
                 when(englishLanguageDevelopmentRecordRepository.save(any())).thenReturn(null);
@@ -92,13 +96,51 @@ public class EnterEnglishLanguageDevelopmentRecordUseCaseTest {
         }
 
         @Test
+        public void givenTeacherIdThatDoesNotExist_whenEnter_thenShouldThrowException() {
+                // given
+                EnterEnglishLanguageDevelopmentRecordCommand enterEnglishLanguageDevelopmentRecordCommand = validEnglishLanguageDevelopmentRecord();
+
+                // when
+                when(teacherGateway.existsById(any())).thenReturn(false);
+
+                // then
+                assertThrows(IllegalArgumentException.class, () -> enterEnglishLanguageDevelopmentRecordUseCase
+                                .execute(enterEnglishLanguageDevelopmentRecordCommand));
+        }
+
+        @Test
+        public void givenStudentIdThatDoesNotExist_whenEnter_thenShouldThrowException() {
+                // given
+                EnterEnglishLanguageDevelopmentRecordCommand enterEnglishLanguageDevelopmentRecordCommand = validEnglishLanguageDevelopmentRecord();
+
+                // when
+                when(teacherGateway.existsById(any())).thenReturn(true);
+                when(studentGateway.existsById(any())).thenReturn(false);
+
+                // then
+                assertThrows(IllegalArgumentException.class, () -> enterEnglishLanguageDevelopmentRecordUseCase
+                                .execute(enterEnglishLanguageDevelopmentRecordCommand));
+        }
+
+        @Test
+        public void givenSchoolClassIdThatDoesNotExist_whenEnter_thenShouldThrowException() {
+                // given
+                EnterEnglishLanguageDevelopmentRecordCommand enterEnglishLanguageDevelopmentRecordCommand = validEnglishLanguageDevelopmentRecord();
+
+                // when
+                when(teacherGateway.existsById(any())).thenReturn(true);
+                when(studentGateway.existsById(any())).thenReturn(true);
+                when(schoolClassRepository.existsById(any())).thenReturn(false);
+
+                // then
+                assertThrows(IllegalArgumentException.class, () -> enterEnglishLanguageDevelopmentRecordUseCase
+                                .execute(enterEnglishLanguageDevelopmentRecordCommand));
+        }
+
+        @Test
         public void givenInvalidEnglishLanguageDevelopmentRecord_whenEnter_thenShouldThrowException() {
                 // given
-                EnterEnglishLanguageDevelopmentRecordCommand enterEnglishLanguageDevelopmentRecordCommand = new EnterEnglishLanguageDevelopmentRecordCommand(
-                                UUID.randomUUID(),
-                                UUID.randomUUID(),
-                                UUID.randomUUID(),
-                                "LEVEL 1");
+                EnterEnglishLanguageDevelopmentRecordCommand enterEnglishLanguageDevelopmentRecordCommand = validEnglishLanguageDevelopmentRecord();
 
                 // when
                 when(teacherGateway.existsById(any())).thenReturn(true);
