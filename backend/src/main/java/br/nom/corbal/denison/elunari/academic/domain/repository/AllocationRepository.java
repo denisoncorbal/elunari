@@ -11,4 +11,6 @@ public interface AllocationRepository {
     public AllocationAggregate save(AllocationAggregate allocationAggregate);
 
     public boolean isTeacherAllocatedToSchoolClass(UUID teacherId, UUID schoolClassId);
+
+    public boolean isTeacherAllocatedToSchoolClassAndSubject(UUID teacherId, UUID schoolClassId, UUID subjectId);
 }
