@@ -5,10 +5,14 @@ import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
 import static com.tngtech.archunit.library.Architectures.layeredArchitecture;
 import static com.tngtech.archunit.library.dependencies.SlicesRuleDefinition.slices;
 
+import com.tngtech.archunit.core.domain.JavaClass;
 import com.tngtech.archunit.core.importer.ImportOption;
 import com.tngtech.archunit.junit.AnalyzeClasses;
 import com.tngtech.archunit.junit.ArchTest;
+import com.tngtech.archunit.lang.ArchCondition;
 import com.tngtech.archunit.lang.ArchRule;
+import com.tngtech.archunit.lang.ConditionEvents;
+import com.tngtech.archunit.lang.SimpleConditionEvent;
 
 @AnalyzeClasses(packages = "br.nom.corbal.denison.elunari", importOptions = { ImportOption.DoNotIncludeTests.class })
 public class ArchitectureRulesTest {
@@ -96,8 +100,101 @@ public class ArchitectureRulesTest {
 
         @ArchTest
         static final ArchRule repository_ports_should_be_in_domain = classes()
-                        .that().haveNameMatching(".*Repository")
+                        .that().haveSimpleNameEndingWith("Repository")
                         .and().areInterfaces()
-                        .should().resideInAPackage("..domain.repository..");
+                        .should().resideInAPackage("..domain.repository..")
+                        .allowEmptyShould(true);
+
+        @ArchTest
+        static final ArchRule bounded_contexts_should_not_depend_on_each_other = noClasses()
+                        .should(new ArchCondition<>("depend on another bounded context") {
+
+                                @Override
+                                public void check(JavaClass clazz, ConditionEvents events) {
+
+                                        String sourceBc = extractBoundedContext(clazz.getPackageName());
+
+                                        if ("shared".equals(sourceBc)) {
+                                                return;
+                                        }
+
+                                        clazz.getDirectDependenciesFromSelf().forEach(dep -> {
+
+                                                String targetBc = extractBoundedContext(
+                                                                dep.getTargetClass().getPackageName());
+
+                                                boolean violation = !sourceBc.equals(targetBc)
+                                                                && !"shared".equals(targetBc);
+
+                                                if (violation) {
+                                                        events.add(SimpleConditionEvent.violated(
+                                                                        dep,
+                                                                        String.format(
+                                                                                        "%s depends on %s",
+                                                                                        clazz.getName(),
+                                                                                        dep.getTargetClass()
+                                                                                                        .getName())));
+                                                }
+                                        });
+                                }
+                        });
+
+        private static String extractBoundedContext(String packageName) {
+
+                String prefix = "br.nom.corbal.denison.elunari.";
+
+                if (!packageName.startsWith(prefix))
+                        return "shared";
+
+                String remaining = packageName.substring(prefix.length());
+
+                return remaining.split("\\.")[0];
+        }
+
+        @ArchTest
+        static final ArchRule feature_or_module_should_not_depend_on_each_other = noClasses()
+                        .should(new ArchCondition<>("depend on another feature or module") {
+
+                                @Override
+                                public void check(JavaClass clazz, ConditionEvents events) {
+
+                                        String sourceFOrM = extractFeatureOrModule(clazz.getPackageName());
+
+                                        if ("shared".equals(sourceFOrM)) {
+                                                return;
+                                        }
+
+                                        clazz.getDirectDependenciesFromSelf().forEach(dep -> {
+
+                                                String targetFOrM = extractFeatureOrModule(
+                                                                dep.getTargetClass().getPackageName());
+
+                                                boolean violation = !sourceFOrM.equals(targetFOrM)
+                                                                && !"shared".equals(targetFOrM);
+
+                                                if (violation) {
+                                                        events.add(SimpleConditionEvent.violated(
+                                                                        dep,
+                                                                        String.format(
+                                                                                        "%s depends on %s",
+                                                                                        clazz.getName(),
+                                                                                        dep.getTargetClass()
+                                                                                                        .getName())));
+                                                }
+                                        });
+                                }
+                        });
+
+        private static String extractFeatureOrModule(String packageName) {
+
+                String prefix = "br.nom.corbal.denison.elunari.";
+
+                if (!packageName.startsWith(prefix))
+                        return "shared";
+
+                String remaining = packageName.substring(prefix.length());
+
+                return remaining.split("\\.")[1];
+        }
 
 }

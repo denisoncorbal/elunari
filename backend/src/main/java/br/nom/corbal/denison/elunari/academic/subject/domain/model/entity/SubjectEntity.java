@@ -1,0 +1,27 @@
+package br.nom.corbal.denison.elunari.academic.subject.domain.model.entity;
+
+import java.util.UUID;
+
+import br.nom.corbal.denison.elunari.academic.subject.domain.model.valueobject.SubjectName;
+import br.nom.corbal.denison.elunari.academic.subject.domain.model.valueobject.SubjectStatus;
+
+public class SubjectEntity {
+    private final UUID id;
+    private SubjectName name;
+
+    public SubjectName getName() {
+        return name;
+    }
+
+    private SubjectStatus status;
+
+    public SubjectEntity(SubjectName name, SubjectStatus status) {
+        this.id = UUID.randomUUID();
+        this.name = name;
+        this.status = status;
+    }
+
+    public UUID getId() {
+        return this.id;
+    }
+}
