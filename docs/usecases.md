@@ -332,3 +332,35 @@
 ### 10.5 - Traceability
 
 -
+
+## 11 - Enter honor roll record
+
+### 11.1 - Overview
+
+- Actor: Teacher
+- Objective: School class teacher need to record information about students who earn the right to be on honor roll based on his grades
+- Bounded Context: Academic
+- Description: Teacher observes his students and then enter in the system information about honor rolls
+
+### 11.2 - Business Rules
+
+- An honor roll record must have only one register
+- An honor roll record must hava at least the information of teacher unique identifier, student unique identifier, school class unique identifier, data to be recorded
+- An honor roll record must have an unique identifier to be used on the system
+- An honor roll record must hava an information about if it is active or not
+
+### 11.3 - Use Case Flow
+
+- Receive command `EnterHonorRollRecordCommand`
+- Create the aggregate `HonorRollRecord`
+- Persist honor roll record
+- Publish event `HonorRollRecordEnteredEvent`
+- Return `HonorRollRecordId`
+
+### 11.4 - Technical Notes
+
+-
+
+### 11.5 - Traceability
+
+-
