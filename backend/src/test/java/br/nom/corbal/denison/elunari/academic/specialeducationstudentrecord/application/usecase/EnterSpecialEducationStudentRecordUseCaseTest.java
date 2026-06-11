@@ -53,15 +53,19 @@ public class EnterSpecialEducationStudentRecordUseCaseTest {
         @InjectMocks
         EnterSpecialEducationStudentRecordUseCase enterSpecialEducationStudentRecordUseCase;
 
-        @Test
-        public void givenValidSpecialEducationStudentRecord_whenEnter_thenShouldPersistAndPublishEvent() {
-                // given
-                EnterSpecialEducationStudentRecordCommand enterSpecialEducationStudentRecordCommand = new EnterSpecialEducationStudentRecordCommand(
+        private EnterSpecialEducationStudentRecordCommand validEnterSpecialEducationStudentRecordCommand() {
+                return new EnterSpecialEducationStudentRecordCommand(
                                 UUID.randomUUID(),
                                 UUID.randomUUID(),
                                 UUID.randomUUID(),
                                 "RED FLAG",
                                 "ACTIVE");
+        }
+
+        @Test
+        public void givenValidSpecialEducationStudentRecord_whenEnter_thenShouldPersistAndPublishEvent() {
+                // given
+                EnterSpecialEducationStudentRecordCommand enterSpecialEducationStudentRecordCommand = validEnterSpecialEducationStudentRecordCommand();
 
                 // when
                 when(specialEducationStudentRecordRepository.save(any())).thenReturn(null);
@@ -90,6 +94,48 @@ public class EnterSpecialEducationStudentRecordUseCaseTest {
                                 .publish(any(SpecialEducationStudentRecordEnteredEvent.class));
 
                 assertNotNull(specialEducationStudentRecordId);
+        }
+
+        @Test
+        public void givenTeacherIdThatDoesNotExist_whenEnter_thenShouldThrowException() {
+                // given
+                EnterSpecialEducationStudentRecordCommand enterSpecialEducationStudentRecordCommand = validEnterSpecialEducationStudentRecordCommand();
+
+                // when
+                when(teacherGateway.existsById(any())).thenReturn(false);
+
+                // then
+                assertThrows(IllegalArgumentException.class, () -> enterSpecialEducationStudentRecordUseCase
+                                .execute(enterSpecialEducationStudentRecordCommand));
+        }
+
+        @Test
+        public void givenStudentIdThatDoesNotExist_whenEnter_thenShouldThrowException() {
+                // given
+                EnterSpecialEducationStudentRecordCommand enterSpecialEducationStudentRecordCommand = validEnterSpecialEducationStudentRecordCommand();
+
+                // when
+                when(teacherGateway.existsById(any())).thenReturn(true);
+                when(studentGateway.existsById(any())).thenReturn(false);
+
+                // then
+                assertThrows(IllegalArgumentException.class, () -> enterSpecialEducationStudentRecordUseCase
+                                .execute(enterSpecialEducationStudentRecordCommand));
+        }
+
+        @Test
+        public void givenSchoolClassIdThatDoesNotExist_whenEnter_thenShouldThrowException() {
+                // given
+                EnterSpecialEducationStudentRecordCommand enterSpecialEducationStudentRecordCommand = validEnterSpecialEducationStudentRecordCommand();
+
+                // when
+                when(teacherGateway.existsById(any())).thenReturn(true);
+                when(studentGateway.existsById(any())).thenReturn(true);
+                when(schoolClassRepository.existsById(any())).thenReturn(false);
+
+                // then
+                assertThrows(IllegalArgumentException.class, () -> enterSpecialEducationStudentRecordUseCase
+                                .execute(enterSpecialEducationStudentRecordCommand));
         }
 
         @Test
