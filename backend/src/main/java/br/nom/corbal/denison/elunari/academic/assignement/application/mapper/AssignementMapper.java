@@ -8,8 +8,13 @@ import br.nom.corbal.denison.elunari.academic.assignement.domain.model.valueobje
 import br.nom.corbal.denison.elunari.academic.assignement.domain.model.valueobject.AssignementWeight;
 import br.nom.corbal.denison.elunari.academic.assignement.domain.model.valueobject.QuarterReference;
 
-public class AssignementMapper {
-    public AssignementAggregate from(RegisterAssignementCommand registerAssignementCommand) {
+public final class AssignementMapper {
+
+    private AssignementMapper() {
+        throw new AssertionError("Illegal instantiation");
+    }
+
+    public static AssignementAggregate toAssignementAggregate(RegisterAssignementCommand registerAssignementCommand) {
         return new AssignementAggregate(registerAssignementCommand.teacherId(),
                 registerAssignementCommand.schoolClassId(), registerAssignementCommand.subjectId(),
                 registerAssignementCommand.studentId(),

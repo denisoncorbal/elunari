@@ -42,8 +42,6 @@ public class RegisterAssignementUseCase implements BaseUseCase<UUID, RegisterAss
         this.assignementEventPublisher = assignementEventPublisher;
     }
 
-    private final AssignementMapper assignementMapper = new AssignementMapper();
-
     @Override
     public UUID execute(RegisterAssignementCommand registerAssignementCommand) {
         if (!this.teacherGateway.existsById(registerAssignementCommand.teacherId())) {
@@ -75,7 +73,7 @@ public class RegisterAssignementUseCase implements BaseUseCase<UUID, RegisterAss
             throw new IllegalArgumentException("Student is not enrolled to the school class");
         }
 
-        AssignementAggregate assignement = this.assignementMapper.from(registerAssignementCommand);
+        AssignementAggregate assignement = AssignementMapper.toAssignementAggregate(registerAssignementCommand);
 
         this.assignementRepository.save(assignement);
 

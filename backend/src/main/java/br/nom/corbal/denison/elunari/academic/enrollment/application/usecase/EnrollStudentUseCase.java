@@ -14,8 +14,6 @@ import br.nom.corbal.denison.elunari.shared.application.usecase.BaseUseCase;
 
 public class EnrollStudentUseCase implements BaseUseCase<UUID, EnrollStudentCommand> {
 
-    private final EnrollmentMapper enrollmentMapper = new EnrollmentMapper();
-
     private final StudentGateway studentGateway;
     private final SchoolClassRepository schoolClassRepository;
     private final EnrollmentRepository enrollmentRepository;
@@ -44,7 +42,7 @@ public class EnrollStudentUseCase implements BaseUseCase<UUID, EnrollStudentComm
             throw new IllegalArgumentException("Student already enrolled to a school class");
         }
 
-        EnrollmentAggregate enrollmentAggregate = this.enrollmentMapper.from(enrollStudentCommand);
+        EnrollmentAggregate enrollmentAggregate = EnrollmentMapper.toEnrollmentAggregate(enrollStudentCommand);
 
         this.enrollmentRepository.save(enrollmentAggregate);
 

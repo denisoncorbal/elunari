@@ -4,8 +4,12 @@ import br.nom.corbal.denison.elunari.academic.allocation.application.command.All
 import br.nom.corbal.denison.elunari.academic.allocation.domain.model.aggregate.AllocationAggregate;
 import br.nom.corbal.denison.elunari.academic.allocation.domain.model.valueobject.TimePeriod;
 
-public class AllocationMapper {
-    public AllocationAggregate from(AllocateTeacherCommand allocateTeacherCommand) {
+public final class AllocationMapper {
+    private AllocationMapper() {
+        throw new AssertionError("Illegal instantiation");
+    }
+
+    public static AllocationAggregate toAllocationAggregate(AllocateTeacherCommand allocateTeacherCommand) {
         return new AllocationAggregate(
                 allocateTeacherCommand.teacherId(),
                 allocateTeacherCommand.subjectId(),

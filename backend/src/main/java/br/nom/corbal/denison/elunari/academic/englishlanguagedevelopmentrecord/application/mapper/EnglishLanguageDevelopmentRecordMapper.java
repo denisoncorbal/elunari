@@ -4,8 +4,13 @@ import br.nom.corbal.denison.elunari.academic.englishlanguagedevelopmentrecord.a
 import br.nom.corbal.denison.elunari.academic.englishlanguagedevelopmentrecord.domain.model.aggregate.EnglishLanguageDevelopmentRecordAggregate;
 import br.nom.corbal.denison.elunari.academic.englishlanguagedevelopmentrecord.domain.model.valueobject.EnglishLanguageDevelopmentLevel;
 
-public class EnglishLanguageDevelopmentRecordMapper {
-    public EnglishLanguageDevelopmentRecordAggregate from(
+public final class EnglishLanguageDevelopmentRecordMapper {
+
+    private EnglishLanguageDevelopmentRecordMapper() {
+        throw new AssertionError("Illegal instantiation");
+    }
+
+    public static EnglishLanguageDevelopmentRecordAggregate toEnglishLanguageDevelopmentRecordAggregate(
             EnterEnglishLanguageDevelopmentRecordCommand enterEnglishLanguageDevelopmentRecordCommand) {
         return new EnglishLanguageDevelopmentRecordAggregate(
                 enterEnglishLanguageDevelopmentRecordCommand.teacherId(),

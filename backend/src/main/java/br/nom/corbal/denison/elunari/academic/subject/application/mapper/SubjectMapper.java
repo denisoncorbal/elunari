@@ -5,8 +5,12 @@ import br.nom.corbal.denison.elunari.academic.subject.domain.model.entity.Subjec
 import br.nom.corbal.denison.elunari.academic.subject.domain.model.valueobject.SubjectName;
 import br.nom.corbal.denison.elunari.academic.subject.domain.model.valueobject.SubjectStatus;
 
-public class SubjectMapper {
-    public SubjectEntity from(RegisterSubjectCommand registerSubjectCommand) {
+public final class SubjectMapper {
+    private SubjectMapper() {
+        throw new AssertionError("Illegal instantiation");
+    }
+
+    public static SubjectEntity toSubjectEntity(RegisterSubjectCommand registerSubjectCommand) {
         return new SubjectEntity(
                 new SubjectName(registerSubjectCommand.name()),
                 new SubjectStatus(registerSubjectCommand.status()));

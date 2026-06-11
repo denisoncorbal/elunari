@@ -7,8 +7,12 @@ import br.nom.corbal.denison.elunari.academic.schoolclass.domain.model.valueobje
 import br.nom.corbal.denison.elunari.academic.schoolclass.domain.model.valueobject.SchoolClassReferenceYear;
 import br.nom.corbal.denison.elunari.academic.schoolclass.domain.model.valueobject.SchoolClassStatus;
 
-public class SchoolClassMapper {
-    public SchoolClassEntity from(RegisterSchoolClassCommand registerSchoolClassCommand) {
+public final class SchoolClassMapper {
+    private SchoolClassMapper() {
+        throw new AssertionError("Illegal instantiation");
+    }
+
+    public static SchoolClassEntity toSchoolClassEntity(RegisterSchoolClassCommand registerSchoolClassCommand) {
         return new SchoolClassEntity(
                 new SchoolClassName(registerSchoolClassCommand.name()),
                 new Grade(registerSchoolClassCommand.grade()),

@@ -5,8 +5,12 @@ import br.nom.corbal.denison.elunari.academic.responsetointerventionrecord.domai
 import br.nom.corbal.denison.elunari.academic.responsetointerventionrecord.domain.model.valueobject.ResponseToInterventionLevel;
 import br.nom.corbal.denison.elunari.academic.responsetointerventionrecord.domain.model.valueobject.ResponseToInterventionStatus;
 
-public class ResponseToInterventionRecordMapper {
-    public ResponseToInterventionRecordAggregate from(
+public final class ResponseToInterventionRecordMapper {
+    private ResponseToInterventionRecordMapper() {
+        throw new AssertionError("Illegal instantiation");
+    }
+
+    public static ResponseToInterventionRecordAggregate toResponseToInterventionRecordAggregate(
             EnterResponseToInterventionRecordCommand enterResponseToInterventionRecordCommand) {
         return new ResponseToInterventionRecordAggregate(
                 enterResponseToInterventionRecordCommand.teacherId(),

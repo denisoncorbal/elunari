@@ -32,8 +32,6 @@ public class EnterEnglishLanguageDevelopmentRecordUseCase
 
     private final EnglishLanguageDevelopmentRecordEventPublisher<EnglishLanguageDevelopmentRecordEnteredEvent> englishLanguageDevelopmentRecordEventPublisher;
 
-    private final EnglishLanguageDevelopmentRecordMapper englishLanguageDevelopmentRecordMapper = new EnglishLanguageDevelopmentRecordMapper();
-
     public EnterEnglishLanguageDevelopmentRecordUseCase(TeacherGateway teacherGateway, StudentGateway studentGateway,
             SchoolClassRepository schoolClassRepository, AllocationRepository allocationRepository,
             EnrollmentRepository enrollmentRepository,
@@ -70,8 +68,8 @@ public class EnterEnglishLanguageDevelopmentRecordUseCase
             throw new IllegalArgumentException("Student is not enrolled to the school class");
         }
 
-        EnglishLanguageDevelopmentRecordAggregate englishLanguageDevelopmentRecordAggregate = this.englishLanguageDevelopmentRecordMapper
-                .from(enterEnglishLanguageDevelopmentRecordCommand);
+        EnglishLanguageDevelopmentRecordAggregate englishLanguageDevelopmentRecordAggregate = EnglishLanguageDevelopmentRecordMapper
+                .toEnglishLanguageDevelopmentRecordAggregate(enterEnglishLanguageDevelopmentRecordCommand);
 
         this.englishLanguageDevelopmentRecordRepository.save(englishLanguageDevelopmentRecordAggregate);
 

@@ -5,8 +5,12 @@ import br.nom.corbal.denison.elunari.academic.specialeducationstudentrecord.doma
 import br.nom.corbal.denison.elunari.academic.specialeducationstudentrecord.domain.model.valueobject.SpecialEducationStudentInformation;
 import br.nom.corbal.denison.elunari.academic.specialeducationstudentrecord.domain.model.valueobject.SpecialEducationStudentStatus;
 
-public class SpecialEducationStudentRecordMapper {
-    public SpecialEducationStudentRecordAggregate from(
+public final class SpecialEducationStudentRecordMapper {
+    private SpecialEducationStudentRecordMapper() {
+        throw new AssertionError("Illegal instantiation");
+    }
+
+    public static SpecialEducationStudentRecordAggregate toSpecialEducationStudentRecordAggregate(
             EnterSpecialEducationStudentRecordCommand enterSpecialEducationStudentRecordCommand) {
         return new SpecialEducationStudentRecordAggregate(
                 enterSpecialEducationStudentRecordCommand.teacherId(),

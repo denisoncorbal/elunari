@@ -31,8 +31,6 @@ public class EnterSpecialEducationStudentRecordUseCase
 
     private final SpecialEducationStudentRecordEventPublisher<SpecialEducationStudentRecordEnteredEvent> specialEducationStudentRecordEventPublisher;
 
-    private final SpecialEducationStudentRecordMapper specialEducationStudentRecordMapper = new SpecialEducationStudentRecordMapper();
-
     public EnterSpecialEducationStudentRecordUseCase(TeacherGateway teacherGateway, StudentGateway studentGateway,
             SchoolClassRepository schoolClassRepository, AllocationRepository allocationRepository,
             EnrollmentRepository enrollmentRepository,
@@ -69,8 +67,8 @@ public class EnterSpecialEducationStudentRecordUseCase
             throw new IllegalArgumentException("Student is not enrolled to the school class");
         }
 
-        SpecialEducationStudentRecordAggregate specialEducationStudentRecordAggregate = this.specialEducationStudentRecordMapper
-                .from(enterSpecialEducationStudentRecordCommand);
+        SpecialEducationStudentRecordAggregate specialEducationStudentRecordAggregate = SpecialEducationStudentRecordMapper
+                .toSpecialEducationStudentRecordAggregate(enterSpecialEducationStudentRecordCommand);
 
         this.specialEducationStudentRecordRespository.save(specialEducationStudentRecordAggregate);
 

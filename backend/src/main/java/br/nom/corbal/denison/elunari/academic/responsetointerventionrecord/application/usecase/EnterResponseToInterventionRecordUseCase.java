@@ -31,8 +31,6 @@ public class EnterResponseToInterventionRecordUseCase
 
     private final ResponseToInterventionRecordEventPublisher<ResponseToInterventionRecordEnteredEvent> responseToInterventionRecordEventPublisher;
 
-    private final ResponseToInterventionRecordMapper responseToInterventionRecordMapper = new ResponseToInterventionRecordMapper();
-
     public EnterResponseToInterventionRecordUseCase(TeacherGateway teacherGateway, StudentGateway studentGateway,
             SchoolClassRepository schoolClassRepository, AllocationRepository allocationRepository,
             EnrollmentRepository enrollmentRepository,
@@ -69,8 +67,8 @@ public class EnterResponseToInterventionRecordUseCase
             throw new IllegalArgumentException("Student is not enrolled to the school class");
         }
 
-        ResponseToInterventionRecordAggregate responseToInterventionRecordAggregate = this.responseToInterventionRecordMapper
-                .from(enterResponseToInterventionRecordCommand);
+        ResponseToInterventionRecordAggregate responseToInterventionRecordAggregate = ResponseToInterventionRecordMapper
+                .toResponseToInterventionRecordAggregate(enterResponseToInterventionRecordCommand);
 
         this.responseToInterventionRecordRepository.save(responseToInterventionRecordAggregate);
 

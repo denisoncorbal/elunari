@@ -15,8 +15,6 @@ public class RegisterTeacherUseCase implements BaseUseCase<UUID, RegisterTeacher
 
     private final TeacherEventPublisher<TeacherRegisteredEvent> teacherEventPublisher;
 
-    private final TeacherMapper registerTeacherMapper = new TeacherMapper();
-
     public RegisterTeacherUseCase(TeacherRepository teacherRepository,
             TeacherEventPublisher<TeacherRegisteredEvent> teacherEventPublisher) {
         this.teacherEventPublisher = teacherEventPublisher;
@@ -25,7 +23,7 @@ public class RegisterTeacherUseCase implements BaseUseCase<UUID, RegisterTeacher
 
     @Override
     public UUID execute(RegisterTeacherCommand registerTeacherCommand) {
-        TeacherEntity teacher = this.registerTeacherMapper.from(registerTeacherCommand);
+        TeacherEntity teacher = TeacherMapper.toTeacherEntity(registerTeacherCommand);
         this.teacherRepository.save(teacher);
         this.teacherEventPublisher.publish(new TeacherRegisteredEvent(teacher.getId()));
         return teacher.getId();
