@@ -364,3 +364,35 @@
 ### 11.5 - Traceability
 
 -
+
+## 12 - Enter teacher note record
+
+### 12.1 - Overview
+
+- Actor: Teacher
+- Objective: School class teacher need to record notes about his students developments and behaviour
+- Bounded Context: Academic
+- Description: Teacher observes his students and then enter in the system notes about them
+
+### 12.2 - Business Rules
+
+- An teacher note record must have only one register
+- An teacher note record must hava at least the information of teacher unique identifier, student unique identifier, school class unique identifier, data to be recorded
+- An teacher note record must have an unique identifier to be used on the system
+- An teacher note record must hava an information about if it is active or not
+
+### 12.3 - Use Case Flow
+
+- Receive command `EnterTeacherNoteRecordCommand`
+- Create the aggregate `TeacherNoteRecord`
+- Persist teacher note record
+- Publish event `TeacherNoteRecordEnteredEvent`
+- Return `TeacherNoteRecordId`
+
+### 12.4 - Technical Notes
+
+-
+
+### 12.5 - Traceability
+
+-
