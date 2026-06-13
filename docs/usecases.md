@@ -396,3 +396,35 @@
 ### 12.5 - Traceability
 
 -
+
+## 13 - Enter reading level record
+
+### 13.1 - Overview
+
+- Actor: Teacher
+- Objective: School class teacher need to record reading level off his students
+- Bounded Context: Academic
+- Description: Teacher observes his students and then enter in the system his reading levels
+
+### 13.2 - Business Rules
+
+- An reading level record must have only one register
+- An reading level record must hava at least the information of teacher unique identifier, student unique identifier, school class unique identifier, data to be recorded
+- An reading level record must have an unique identifier to be used on the system
+- An reading level record must hava an information about if it is active or not
+
+### 13.3 - Use Case Flow
+
+- Receive command `EnterReadingLevelRecordCommand`
+- Create the aggregate `ReadingLevelRecord`
+- Persist reading level record
+- Publish event `ReadingLevelRecordEnteredEvent`
+- Return `ReadingLevelRecordId`
+
+### 13.4 - Technical Notes
+
+-
+
+### 13.5 - Traceability
+
+-
